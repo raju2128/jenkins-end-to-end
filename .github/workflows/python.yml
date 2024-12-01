@@ -1,0 +1,28 @@
+name: Simple-Python-Script
+on: [push]
+
+jobs:
+  test-py-script:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9]
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: setup python
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+       
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgarde pip
+        pip install pytest
+
+    - name: Run Tests
+      run: |
+        cd src
+        python -m pytest addition.py
+    
+    
